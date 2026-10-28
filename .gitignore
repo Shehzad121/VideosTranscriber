@@ -1,0 +1,37 @@
+# Video files & input directory
+videos/
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.webm
+*.flv
+*.m4v
+
+# Audio files
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+
+# Transcripts output directory
+transcripts/
+
+# Python cache & environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
