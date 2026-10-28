@@ -1,54 +1,107 @@
 # AI Video Transcription Studio
 
-Clean, automated offline speech-to-text transcription for videos and audio powered by `faster-whisper`.
+Automated, high-performance offline speech-to-text transcription studio for video and audio files powered by **faster-whisper**.
 
 ---
 
-## 📁 Organized Project Structure
+## 🌟 Key Features
+
+- **Direct In-Memory Processing**: Transcribes `.mp4`, `.mkv`, `.avi`, `.mov`, `.webm`, `.mp3`, `.wav`, and `.m4a` directly without creating temporary audio files on disk.
+- **Multiple Output Formats**: Automatically produces 3 formats per video:
+  - `_transcript.txt`: Clean, human-readable paragraphs.
+  - `_timestamps.txt`: Precise timecoded segments (`[HH:MM:SS -> HH:MM:SS] Text`).
+  - `.srt`: Standard subtitle format for media players and video editors.
+- **Interactive Web Studio**: Sleek, modern browser interface with a real-time glowing progress bar, ETA, inference speed metrics, and live streaming transcript.
+- **Dedicated Folder Structure**: Organizes each video's transcripts into its own subfolder inside `transcripts/<video_name>/`.
+- **Zero API Fees / 100% Offline**: Runs locally using quantized CTranslate2 models (`int8` on CPU).
+- **Voice Activity Detection (VAD)**: Automatically skips background silence to minimize processing time.
+
+---
+
+## 📁 Repository Structure
 
 ```text
-AI4HealthVideos/
+AI4HealthVideosTranscriber/
 │
-├── 📂 videos/               # 🎬 APNI TAMAAM VIDEOS YAHAAN RAKHEIN
-│   ├── pithon.mp4
-│   └── jgq-btet-sbi-2026-10-20.mp4
+├── 📂 videos/               # Place all input video/audio files here (git-ignored)
+│   └── example_video.mp4
 │
-├── 📂 transcripts/          # 📄 TAMAAM TRANSCRIPTS YAHAAN AUTO-SAVE HONGI
-│   ├── pithon_transcript.txt
-│   ├── pithon_timestamps.txt
-│   └── pithon.srt
+├── 📂 transcripts/          # Transcripts generated here, organized per video (git-ignored)
+│   └── example_video/
+│       ├── example_video_transcript.txt
+│       ├── example_video_timestamps.txt
+│       └── example_video.srt
 │
-├── 🚀 run_app.bat           # 1-Click Double-Click Web Launcher
-├── 🐍 app.py                # Web Studio Backend & UI Server
-├── 🛠️ transcribe.py         # CLI / Terminal Batch Script
-└── 📖 README.md             # Project Guide
+├── 🚀 run_app.bat           # 1-Click double-click launcher for Windows
+├── 🐍 app.py                # FastAPI backend & web studio UI server
+├── 🛠️ transcribe.py         # Standalone CLI / batch processing script
+├── 📄 .gitignore            # Ignores raw media files, transcripts, and caches
+└── 📖 README.md             # Project documentation
 ```
 
 ---
 
-## 🚀 How to Use
+## ⚙️ Installation & Requirements
 
-### Method 1: Interactive Web Studio (Easiest)
-1. Double click **`run_app.bat`** (or run `python app.py`).
-2. Browser automatically opens at **`http://127.0.0.1:8765`**.
-3. Select any video from the list (it automatically detects all videos inside `videos/`).
-4. Click **Start Transcription** to see live progress, audio metrics, and streaming text.
-5. Use **📁 Transcripts Folder** or **🎬 Videos Folder** buttons in the header to quickly access your files.
+### 1. Requirements
+- Python 3.10+
+- FFmpeg (installed and added to system `PATH`)
+
+### 2. Install Python Dependencies
+```bash
+pip install faster-whisper fastapi uvicorn tqdm
+```
+
+---
+
+## 🚀 How to Run
+
+### Method 1: Interactive Web Studio (Recommended)
+
+1. **On Windows**: Double-click **`run_app.bat`**.
+2. **Or via terminal**:
+   ```bash
+   python app.py
+   ```
+3. Your browser will automatically open at:
+   ```
+   http://127.0.0.1:8765
+   ```
+4. Select your video from the dropdown (or enter a file name), pick your model and language preferences, and click **Start Transcription**.
 
 ---
 
 ### Method 2: Command Line (CLI)
-You can also transcribe directly from terminal / PowerShell:
 
-```powershell
-# 1. Transcribe any video inside videos/ folder:
-python transcribe.py videos/pithon.mp4
+You can also run batch or single-video transcriptions from the terminal:
 
-# 2. Or simply give video name (it checks videos/ automatically):
-python transcribe.py "jgq-btet-sbi-2026-10-20.mp4"
+```bash
+# 1. Transcribe a specific video:
+python transcribe.py videos/my_video.mp4
 
-# 3. Transcribe ALL videos in the videos folder at once:
+# 2. Transcribe using a specific model (e.g., base for 2x faster execution):
+python transcribe.py videos/my_video.mp4 --model base
+
+# 3. Transcribe with explicit language code:
+python transcribe.py videos/my_video.mp4 --language en
+
+# 4. Transcribe all videos in the videos/ folder automatically:
 python transcribe.py
 ```
 
-All output files (`.txt`, `_timestamps.txt`, `.srt`) are automatically placed into the `transcripts/` folder.
+---
+
+## 📊 Available Whisper Models
+
+| Model | Size | Speed (CPU) | Recommended For |
+|---|---|---|---|
+| `tiny` | ~75 MB | ~15x | Fast draft / testing |
+| `base` | ~145 MB | ~10x | Fast processing with good accuracy |
+| `small` (Default) | ~480 MB | ~5x | Optimal balance of high accuracy & speed |
+| `medium` | ~1.5 GB | ~2x | Complex multi-speaker / heavy accents |
+| `large-v3` | ~3.1 GB | ~1x | Maximum precision |
+
+---
+
+## 📄 License
+This project is open-source and available under the [MIT License](LICENSE).
