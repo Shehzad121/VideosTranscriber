@@ -1,4 +1,4 @@
-# AI Video Transcription Studio
+# VideosTranscriber
 
 Automated, high-performance offline speech-to-text transcription studio for video and audio files powered by **faster-whisper**.
 
@@ -21,7 +21,7 @@ Automated, high-performance offline speech-to-text transcription studio for vide
 ## 📁 Repository Structure
 
 ```text
-AI4HealthVideosTranscriber/
+VideosTranscriber/
 │
 ├── 📂 videos/               # Place all input video/audio files here (git-ignored)
 │   └── example_video.mp4
@@ -35,7 +35,9 @@ AI4HealthVideosTranscriber/
 ├── 🚀 run_app.bat           # 1-Click double-click launcher for Windows
 ├── 🐍 app.py                # FastAPI backend & web studio UI server
 ├── 🛠️ transcribe.py         # Standalone CLI / batch processing script
+├── 📋 requirements.txt      # Python dependencies
 ├── 📄 .gitignore            # Ignores raw media files, transcripts, and caches
+├── ⚖️ LICENSE               # MIT License
 └── 📖 README.md             # Project documentation
 ```
 
@@ -47,9 +49,15 @@ AI4HealthVideosTranscriber/
 - Python 3.10+
 - FFmpeg (installed and added to system `PATH`)
 
-### 2. Install Python Dependencies
+### 2. Clone the Repository
 ```bash
-pip install faster-whisper fastapi uvicorn tqdm
+git clone https://github.com/Shehzad121/VideosTranscriber.git
+cd VideosTranscriber
+```
+
+### 3. Install Python Dependencies
+```bash
+pip install -r requirements.txt
 ```
 
 ---
